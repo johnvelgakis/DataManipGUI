@@ -119,7 +119,7 @@ class GUI_Window:
         dropdown_frame.grid(row=0, column=1, padx=10, pady=10)
 
         tk.Label(dropdown_frame, text="Κατανομές Δεδομένων").grid(row=0, column=0, padx=5, pady=5)
-        self.booking_dist_option = ttk.Combobox(dropdown_frame, values=['ανά μήνα', 'ανά εποχή', 'ανά τύπο δωματείου', 'ανά πελάτη'], state='readonly', justify='center')
+        self.booking_dist_option = ttk.Combobox(dropdown_frame, values=['ανά μήνα', 'ανά εποχή', 'ανά τύπο δωματίου', 'ανά πελάτη'], state='readonly', justify='center')
         self.booking_dist_option.grid(row=0, column=1, padx=5, pady=5)
         self.booking_dist_option.current(0)
 
@@ -368,7 +368,7 @@ class BookingDist(tk.Toplevel):
             self.plot_by_month(df)
         elif self.option == 'ανά εποχή':
             self.plot_by_season(df)
-        elif self.option == 'ανά τύπο δωματείου':
+        elif self.option == 'ανά τύπο δωματίου':
             self.plot_by_room_type(df)
         elif self.option == 'ανά πελάτη':
             self.plot_by_client(df)
@@ -395,7 +395,7 @@ class BookingDist(tk.Toplevel):
         canvas.create_line(0, 0, cols * cell_width, 0, width=2)  # Top line of header
         canvas.create_line(0, 0, 0, rows * cell_height, width=2)  # Left line of leftmost column
 
-        headers = ["Ξενοδοχείο", "Μήνας Max", "Μήνας Min", "Εποχή Max", "Εποχή Min", "Δωμάτειο Max", "Δωμάτειο Min", "Πελάτης Max", "Πελάτης Min"]
+        headers = ["Ξενοδοχείο", "Μήνας Max", "Μήνας Min", "Εποχή Max", "Εποχή Min", "Δωμάτιο Max", "Δωμάτιο Min", "Πελάτης Max", "Πελάτης Min"]
         for j, header in enumerate(headers):
             x = j * cell_width + cell_width / 2
             y = cell_height / 2
@@ -549,9 +549,9 @@ class BookingDist(tk.Toplevel):
 
         for ax, hotel in zip(axes, hotels):
             bars = ax.bar(booking_dist.columns, booking_dist.loc[hotel], color='skyblue')
-            ax.set_xlabel('Τύπος Δωματείου')
+            ax.set_xlabel('Τύπος Δωματίου')
             ax.set_ylabel('Αριθμός Κρατήσεων')
-            ax.set_title(f'Κατανομή Κρατήσεων ανά τύπο δωματείου για το {hotel}')
+            ax.set_title(f'Κατανομή Κρατήσεων ανά τύπο δωματίου για το {hotel}')
             ax.tick_params(axis='x', rotation=45)
 
             for bar in bars:
