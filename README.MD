@@ -18,8 +18,8 @@ This project is a graphical user interface (GUI) for analyzing and presenting ho
 
 1. Clone the repository:
     ```sh
-    git clone <repository-url>
-    cd <repository-directory>
+    git clone <https://github.com/johnvelgakis/DataManipGUI.git>
+    cd <DataManipGUI>
     ```
 
 2. Install the required dependencies:
@@ -66,6 +66,8 @@ arxes_glwsswn/
 ├── main_menu.py
 ├── db_connection.py
 ├── hotel_booking.ipynb
+├── requirements.txt
+├── LICENCE
 ├── README.MD
 ├── tables/
 │   ├── basic_statistics.csv
