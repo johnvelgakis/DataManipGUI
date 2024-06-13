@@ -63,7 +63,7 @@ This project is a graphical user interface (GUI) for analyzing and presenting ho
 ## Directory Structure
 
 ```
-arxes_glwsswn/ 
+DataManipGUI/ 
 │
 ├── main_menu.py
 ├── db_connection.py
