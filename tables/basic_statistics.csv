@@ -1,0 +1,3 @@
+hotel,average_nights,cancellation_rate,first_arrival,last_arrival,total_cancellations,total_bookings,cancellation_percentage
+City Hotel,2.978141938736922,0.41726963317786464,2015-07-01,2017-08-01,33102,79330,41.72696331778646
+Resort Hotel,4.318547179231153,0.27763354967548676,2015-07-01,2017-08-01,11122,40060,27.763354967548675
