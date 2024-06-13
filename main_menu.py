@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
@@ -8,36 +9,63 @@ from db_connection import connect_to_db, insert_booking_data
 from sqlalchemy import create_engine
 
 '''
-Hotels Booking Data Analysis and Presentation GUI.
-Creates a Toplevel overview of the GUI's pages from class instances of inhereted classes from the 
-GUI_Window class.
-All data manipulation is performed using Python's Pandas DataFrame objects. For all the various pages
-data are retrieved from the MySQL db and saved in a pd.DataFrame using the following code:
+Hotels Booking Data Analysis and Presentation GUI
 
-        connection = connect_to_db()
-        df = pd.read_sql("SELECT * FROM bookings", connection)
+This script provides a graphical user interface (GUI) for analyzing and presenting hotel booking data. The GUI comprises 
+multiple pages, each displaying different aspects of the data analysis, derived from MySQL database queries. It allows 
+users to interact with the data visually and retrieve information seamlessly.
 
-In each page the result of every data manipulation and analysis is presented through a graph widget,
-is saved locally in a .png format and as a new table in the db. Every time is ensured that one file 
-or table per GUI page is saved replacing the existing ones.
+Overview:
+---------
+The GUI structure is based on the `GUI_Window` class, from which other classes inherit to create various pages. These pages 
+are designed to display statistical analyses and visualizations of hotel booking data. All data manipulations are performed 
+using Pandas DataFrame objects.
 
-In the beginning, the hotel_booking.csv data file was uploaded in table bookings of the MySQL db using
-the following code:
+Data Handling:
+--------------
+For each page, data is fetched from the MySQL database and loaded into a Pandas DataFrame using the following code snippet:
+    
+    connection = connect_to_db()
+    df = pd.read_sql("SELECT * FROM bookings", connection)
 
-Data Exchange @db
-# Data Insertion to db
+Post data manipulation, results are displayed using graphical widgets and saved locally as .png images and updated tables 
+in the MySQL database. Each page ensures that a single file or table per analysis is saved, replacing any existing files.
+
+Initial Data Upload:
+--------------------
+The initial data upload involves reading data from a CSV file and inserting it into the MySQL database. This is done using 
+the following steps:
+
+Data Exchange @db:
+------------------
+# Data Insertion to DB
 from db_connection import insert_booking_data, retrieve_booking_data
 data = pd.read_csv('hotel_booking.csv', sep=',')
 df = pd.DataFrame(data)
 insert_booking_data(df)
 
-# Retrieve df from db
+# Retrieve Data from DB
 df = retrieve_booking_data()
 print(df.head())
 print(df.info())
 
-After 
+After each manipulation, the resultant table is uploaded back to the database using the following function:
+    
+    upload_to_db(max_min_data, 'booking_distribution')
+
+The CSV versions of these tables can be found in the 'tables' directory.
+
+Key Functionalities:
+--------------------
+- Interactive GUI for data analysis
+- Data retrieval from MySQL database
+- Data manipulation and analysis using Pandas
+- Visualization of results using Matplotlib
+- Saving analysis results as .png images and updating MySQL tables
+
 '''
+
+script_dir = os.path.dirname(__file__)
 
 def upload_to_db(df, table_name):
     connection = connect_to_db()
@@ -63,8 +91,9 @@ class GUI_Window:
         self.create_main_menu()
 
     def create_main_menu(self):
-        image = Image.open("media/src/bg1.jpg")  # Update this with your image path
-        image = image.resize((655, 300), Image.LANCZOS)  # Resize the image to fit the window
+        image_path = os.path.join(script_dir, "media/src/bg1.jpg")  
+        image = Image.open(image_path)
+        image = image.resize((655, 300), Image.LANCZOS) 
         self.photo = ImageTk.PhotoImage(image)
 
         # Create a label to hold the background image
@@ -185,8 +214,9 @@ class BasicStatistics(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
-        image = Image.open("media/src/bg1.jpg")  # Update this with your image path
-        image = image.resize((1350, 800), Image.LANCZOS)  # Resize the image to fit the window
+        image_path = os.path.join(script_dir, "media/src/bg1.jpg")  
+        image = Image.open(image_path)
+        image = image.resize((1350, 800), Image.LANCZOS) 
         self.photo = ImageTk.PhotoImage(image)
         self.bg_label = tk.Label(self, image=self.photo)
         self.bg_label.place(relwidth=1, relheight=1)
@@ -248,8 +278,9 @@ class BasicStatistics(tk.Toplevel):
                         ha='center', va='bottom')
 
         plt.tight_layout()
+    
 
-        plot_filename = 'media/graphics/basic_statistics.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/basic_statistics.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -316,8 +347,9 @@ class BookingDist(tk.Toplevel):
     
 
     def create_widgets(self):
-        image = Image.open("media/src/bg1.jpg")  # Update this with your image path
-        image = image.resize((1200, 1050), Image.LANCZOS)  # Resize the image to fit the window
+        image_path = os.path.join(script_dir, "media/src/bg1.jpg")  
+        image = Image.open(image_path)
+        image = image.resize((1200, 1050), Image.LANCZOS) 
         self.photo = ImageTk.PhotoImage(image)
         
         self.bg_label = tk.Label(self, image=self.photo)
@@ -447,7 +479,7 @@ class BookingDist(tk.Toplevel):
         
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/monthly_distribution.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/monthly_distribution.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -493,7 +525,7 @@ class BookingDist(tk.Toplevel):
 
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/seasonal_distribution.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/seasonal_distribution.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -532,7 +564,7 @@ class BookingDist(tk.Toplevel):
 
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/room_type_distribution.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/room_type_distribution.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -582,7 +614,7 @@ class BookingDist(tk.Toplevel):
 
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/client_statistics.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/client_statistics.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -608,8 +640,9 @@ class BookingTrends(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
-        image = Image.open("media/src/bg1.jpg") 
-        image = image.resize((1200, 800), Image.LANCZOS)  
+        image_path = os.path.join(script_dir, "media/src/bg1.jpg")  
+        image = Image.open(image_path)
+        image = image.resize((1200, 800), Image.LANCZOS) 
         self.photo = ImageTk.PhotoImage(image)
         self.bg_label = tk.Label(self, image=self.photo)
         self.bg_label.place(relwidth=1, relheight=1)
@@ -676,7 +709,7 @@ class BookingTrends(tk.Toplevel):
             ax.set_title(f'Μέση διάρκεια παραμονής ({hotel})')
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/monthly_booking_trends.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/monthly_booking_trends.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -722,7 +755,7 @@ class BookingTrends(tk.Toplevel):
             ax.set_title(f'Μέση διάρκεια παραμονής ({hotel})')
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/yearly_booking_trends.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/yearly_booking_trends.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -777,7 +810,7 @@ class BookingTrends(tk.Toplevel):
 
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/seasonal_booking_trends.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/seasonal_booking_trends.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -831,7 +864,7 @@ class BookingTrends(tk.Toplevel):
 
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/comparative_booking_trends.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/comparative_booking_trends.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -857,8 +890,9 @@ class Seasonality(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
-        image = Image.open("media/src/bg1.jpg")  # Update this with your image path
-        image = image.resize((1200, 1000), Image.LANCZOS)  # Resize the image to fit the window
+        image_path = os.path.join(script_dir, "media/src/bg1.jpg")  
+        image = Image.open(image_path)
+        image = image.resize((1200, 1000), Image.LANCZOS) 
         self.photo = ImageTk.PhotoImage(image)
         
         self.bg_label = tk.Label(self, image=self.photo)
@@ -914,7 +948,7 @@ class Seasonality(tk.Toplevel):
         axs[1, 1].tick_params(axis='x', rotation=45)
         plt.tight_layout()
 
-        plot_filename = 'media/graphics/seasonality.png'
+        plot_filename = os.path.join(script_dir, 'media/graphics/seasonality.png')
         plt.savefig(plot_filename)
 
         image = Image.open(plot_filename)
@@ -927,12 +961,6 @@ class Seasonality(tk.Toplevel):
         back_button = ttk.Button(self, text="Back", command=self.destroy, style='TButton')
         back_button.grid(row=0, column=2, padx=1, pady=1, sticky='e')
         
-        # plot_label = tk.Label(self, image=photo)
-        # plot_label.image = photo
-        # plot_label.grid(row=1, column=0, columnspan=3, padx=5, pady=5)
-
-        # back_button = ttk.Button(self, text="Back", command=self.root.destroy(), style='TButton')
-        # back_button.grid(row=0, column=2, padx=5, pady=5)
 
 if __name__ == "__main__":
     root = tk.Tk()

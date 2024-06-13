@@ -124,10 +124,10 @@ def export_db_schema(connection_params):
 
 if __name__ == "__main__":
     connection_params = {
-        'host': 'localhost',  # Your MySQL server host
-        'user': 'root',       # Your MySQL username
-        'password': 'ArxesGlwsswn1!',  # Your MySQL password
-        'database': 'hotel_booking'  # Your MySQL database name
+        'host': 'localhost',  
+        'user': 'root',       
+        'password': 'ArxesGlwsswn1!', 
+        'database': 'hotel_booking'  
     }
 
     table_names = ['basic_statistics', 'booking_distribution']  
