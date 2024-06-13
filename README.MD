@@ -1,5 +1,7 @@
 # Hotels Booking Data Analysis and Presentation GUI
 
+![Main Menu](media/src/Main_menu.png)
+
 ## Project Description
 
 This project is a graphical user interface (GUI) for analyzing and presenting hotel booking data. It provides various statistical analyses and visualizations, including basic statistics, booking distributions, trends, and seasonality. The GUI allows users to interact with the data, retrieve information from a MySQL database, and visualize results through various plots. It was part of the coursework for CEID's Module Principles of Programming Languages & Compilers.
