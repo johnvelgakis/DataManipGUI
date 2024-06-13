@@ -2,7 +2,8 @@
 
 ## Project Description
 
-This project is a graphical user interface (GUI) for analyzing and presenting hotel booking data. It provides various statistical analyses and visualizations, including basic statistics, booking distributions, trends, and seasonality. The GUI allows users to interact with the data, retrieve information from a MySQL database, and visualize results through various plots.
+This project is a graphical user interface (GUI) for analyzing and presenting hotel booking data. It provides various statistical analyses and visualizations, including basic statistics, booking distributions, trends, and seasonality. The GUI allows users to interact with the data, retrieve information from a MySQL database, and visualize results through various plots. It was part of the coursework for CEID's Module Principles of Programming Languages & Compilers.
+
 
 ## Features
 
@@ -112,4 +113,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For any questions or issues, please contact:
 
-- **Ioannis Velgakis** - (Your email or contact information)
+- **Ioannis Velgakis** - (johnvelgakis@gmail.com)
