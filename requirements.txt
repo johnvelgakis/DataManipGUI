@@ -1,0 +1,8 @@
+tk
+pandas
+numpy
+matplotlib
+SQLAlchemy
+mysql-connector-python
+pillow
+
