@@ -1,6 +1,6 @@
 # Hotels Booking Data Analysis and Presentation GUI
-<div allign='center'>
-    <img src="media/src/Main_menu.png" alt="Main Menu" width="600" height="400">
+<div align='center'>
+    <img src="media/src/Main_menu.png" alt="Main Menu" width="580" height="330">
 </div>
 
 ## Project Description
