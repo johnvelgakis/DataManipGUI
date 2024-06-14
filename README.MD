@@ -79,7 +79,8 @@ DataManipGUI/
 │
 └── media/
     ├── src/
-    │   └── bg1.jpg
+    │   ├── bg1.jpg
+    │   └── Main_menu.png
     └── graphics/
         └── (All the plots being saved)
 ```
