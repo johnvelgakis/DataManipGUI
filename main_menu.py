@@ -284,7 +284,7 @@ class BasicStatistics(tk.Toplevel):
         bold_label = tk.Label(self, text="Βασικά Στατιστικά Ξενοδοχείων", font=("Helvetica", 16, "bold"))
         bold_label.grid(row=0, column=1, padx=1, pady=1)
 
-        canvas = tk.Canvas(self, width=980, height=200, bg='white') 
+        canvas = tk.Canvas(self, width=980, height=200, bg='black') 
         canvas.grid(row=1, column=0, padx=5, pady=1)
 
         # Define table dimensions
@@ -349,8 +349,17 @@ class BookingDist(tk.Toplevel):
         
         df['arrival_date'] = pd.to_datetime(df['arrival_date_year'].astype(str) + '-' + df['arrival_date_month'].astype(str) + '-01')
         
-        if self.date_min is not None and self.date_max is not None:
+        if isinstance(self.date_min, str):
+            self.date_min = pd.to_datetime(self.date_min)
+        if isinstance(self.date_max, str):
+            self.date_max = pd.to_datetime(self.date_max)
+
+        if self.date_min and self.date_max:
             df = df[(df['arrival_date'] >= self.date_min) & (df['arrival_date'] <= self.date_max)]
+            timeInterval = f' από {self.date_min.strftime("%Y-%m-%d")} εώς {self.date_max.strftime("%Y-%m-%d")}'
+        else:
+            timeInterval = '. '
+        self.title(f'Κατανομη Στατιστικών{timeInterval}')
 
         if self.option == 'ανά μήνα':
             self.plot_by_month(df)
@@ -367,7 +376,7 @@ class BookingDist(tk.Toplevel):
         bold_label = tk.Label(self, text="Κατανομές Κρατήσεων Ξενοδοχείων", font=("Helvetica", 16, "bold"))
         bold_label.grid(row=0, column=1, padx=1, pady=1)
         # Table
-        canvas = tk.Canvas(self, width=810, height=160, bg='white')
+        canvas = tk.Canvas(self, width=810, height=160, bg='black')
         canvas.grid(row=1, column=0, padx=1, pady=1)
         cell_width = 90
         cell_height = 40
@@ -641,6 +650,11 @@ class BookingTrends(tk.Toplevel):
 
         df['arrival_date'] = pd.to_datetime(df['arrival_date_year'].astype(str) + '-' + df['arrival_date_month'].astype(str) + '-01')
 
+        if isinstance(self.date_min, str):
+            self.date_min = pd.to_datetime(self.date_min)
+        if isinstance(self.date_max, str):
+            self.date_max = pd.to_datetime(self.date_max)
+
         if self.date_min and self.date_max:
             df = df[(df['arrival_date'] >= self.date_min) & (df['arrival_date'] <= self.date_max)]
             timeInterval = f' από {self.date_min.strftime("%Y-%m-%d")} εώς {self.date_max.strftime("%Y-%m-%d")}'
@@ -889,9 +903,20 @@ class Seasonality(tk.Toplevel):
         connection = connect_to_db()
         df = pd.read_sql("SELECT * FROM bookings", connection)
         connection.close()
+        
         df['arrival_date'] = pd.to_datetime(df['arrival_date_year'].astype(str) + '-' + df['arrival_date_month'].astype(str) + '-01')
+        
+        if isinstance(self.date_min, str):
+            self.date_min = pd.to_datetime(self.date_min)
+        if isinstance(self.date_max, str):
+            self.date_max = pd.to_datetime(self.date_max)
+        
         if self.date_min and self.date_max:
             df = df[(df['arrival_date'] >= self.date_min) & (df['arrival_date'] <= self.date_max)]
+            timeInterval = f' από {self.date_min.strftime("%Y-%m-%d")} εώς {self.date_max.strftime("%Y-%m-%d")}'
+        else:
+            timeInterval = '. '
+        self.title(f'Κατανομη Στατιστικών{timeInterval}')
 
         df['arrival_date_month'] = df['arrival_date'].dt.strftime('%B')
 
