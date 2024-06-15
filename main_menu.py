@@ -33,21 +33,9 @@ in the MySQL database. Each page ensures that a single file or table per analysi
 
 Initial Data Upload:
 --------------------
-The initial data upload involves reading data from a CSV file and inserting it into the MySQL database. This is done using 
-the following steps:
+The initial data upload involves reading data from a CSV file and inserting it into the MySQL database. Run insert_data_to_DB.py.
 
-Data Exchange @db:
-------------------
-# Data Insertion to DB
-from db_connection import insert_booking_data, retrieve_booking_data
-data = pd.read_csv('hotel_booking.csv', sep=',')
-df = pd.DataFrame(data)
-insert_booking_data(df)
 
-# Retrieve Data from DB
-df = retrieve_booking_data()
-print(df.head())
-print(df.info())
 
 After each manipulation, the resultant table is uploaded back to the database using the following function:
     
