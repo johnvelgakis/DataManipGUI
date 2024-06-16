@@ -70,6 +70,8 @@ DataManipGUI/
 ├── db_connection.py
 ├── hotel_booking.ipynb
 ├── requirements.txt
+├── create_db.sql
+├── insert_data_to_DB.py
 ├── LICENCE
 ├── README.MD
 ├── tables/
