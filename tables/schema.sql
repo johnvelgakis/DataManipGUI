@@ -23,14 +23,15 @@ DROP TABLE IF EXISTS `basic_statistics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `basic_statistics` (
-  `hotel` text,
+  `hotel` varchar(255) NOT NULL,
   `average_nights` double DEFAULT NULL,
   `cancellation_rate` double DEFAULT NULL,
   `first_arrival` datetime DEFAULT NULL,
   `last_arrival` datetime DEFAULT NULL,
   `total_cancellations` bigint DEFAULT NULL,
   `total_bookings` bigint DEFAULT NULL,
-  `cancellation_percentage` double DEFAULT NULL
+  `cancellation_percentage` double DEFAULT NULL,
+  PRIMARY KEY (`hotel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -42,7 +43,7 @@ DROP TABLE IF EXISTS `booking_distribution`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `booking_distribution` (
-  `hotel` text,
+  `hotel` varchar(255) NOT NULL,
   `max_month` text,
   `min_month` text,
   `max_season` text,
@@ -50,7 +51,8 @@ CREATE TABLE `booking_distribution` (
   `max_room_type` text,
   `min_room_type` text,
   `max_client_type` text,
-  `min_client_type` text
+  `min_client_type` text,
+  PRIMARY KEY (`hotel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -112,4 +114,4 @@ CREATE TABLE `bookings` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-13 16:55:50
+-- Dump completed on 2024-06-16 13:21:09

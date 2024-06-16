@@ -59,6 +59,17 @@ def upload_to_db(df, table_name):
     connection = connect_to_db()
     engine = create_engine('mysql+mysqlconnector://root:ArxesGlwsswn1!@localhost/hotel_booking')
     df.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
+    cursor = connection.cursor()
+    
+    alter_table_query = f"""
+    ALTER TABLE {table_name}
+    MODIFY COLUMN hotel VARCHAR(255),
+    ADD PRIMARY KEY (hotel);
+    """
+
+    cursor.execute(alter_table_query)
+    connection.commit()
+    cursor.close()
     connection.close()
 
 
@@ -284,7 +295,7 @@ class BasicStatistics(tk.Toplevel):
         bold_label = tk.Label(self, text="Βασικά Στατιστικά Ξενοδοχείων", font=("Helvetica", 16, "bold"))
         bold_label.grid(row=0, column=1, padx=1, pady=1)
 
-        canvas = tk.Canvas(self, width=980, height=200, bg='black') 
+        canvas = tk.Canvas(self, width=980, height=200, bg='lightgray') 
         canvas.grid(row=1, column=0, padx=5, pady=1)
 
         # Define table dimensions
@@ -306,16 +317,16 @@ class BasicStatistics(tk.Toplevel):
         for j, header in enumerate(headers):
             x = j * cell_width + cell_width / 2
             y = cell_height / 2
-            canvas.create_text(x, y, text=header, font=("Helvetica", 12, "bold") )
+            canvas.create_text(x, y, text=header, font=("Helvetica", 12, "bold"), fill='black' )
 
         for i, row in basic_stats.iterrows():
-            canvas.create_text(cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['hotel'], font=("Helvetica", 12, "italic"))
-            canvas.create_text(cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['total_bookings']}")
-            canvas.create_text(2 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['total_cancellations']}")
-            canvas.create_text(3 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['cancellation_percentage']:.2f}%")
-            canvas.create_text(4 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['average_nights']:.2f}")
-            canvas.create_text(5 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['first_arrival'].strftime('%Y-%m-%d'))
-            canvas.create_text(6 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['last_arrival'].strftime('%Y-%m-%d'))
+            canvas.create_text(cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['hotel'], font=("Helvetica", 12, "italic"), fill='black')
+            canvas.create_text(cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['total_bookings']}", fill='black')
+            canvas.create_text(2 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['total_cancellations']}", fill='black')
+            canvas.create_text(3 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['cancellation_percentage']:.2f}%", fill='black')
+            canvas.create_text(4 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=f"{row['average_nights']:.2f}", fill='black')
+            canvas.create_text(5 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['first_arrival'].strftime('%Y-%m-%d'), fill='black')
+            canvas.create_text(6 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['last_arrival'].strftime('%Y-%m-%d'), fill='black')
 
         back_button = ttk.Button(self, text="Back", command=self.destroy, style='TButton')
         back_button.grid(row=0, column=4, padx=10, pady=10, sticky='e')
@@ -376,7 +387,7 @@ class BookingDist(tk.Toplevel):
         bold_label = tk.Label(self, text="Κατανομές Κρατήσεων Ξενοδοχείων", font=("Helvetica", 16, "bold"))
         bold_label.grid(row=0, column=1, padx=1, pady=1)
         # Table
-        canvas = tk.Canvas(self, width=810, height=160, bg='black')
+        canvas = tk.Canvas(self, width=810, height=160, bg='lightgray')
         canvas.grid(row=1, column=0, padx=1, pady=1)
         cell_width = 90
         cell_height = 40
@@ -396,18 +407,18 @@ class BookingDist(tk.Toplevel):
         for j, header in enumerate(headers):
             x = j * cell_width + cell_width / 2
             y = cell_height / 2
-            canvas.create_text(x, y, text=header, font=("Helvetica", 12, "bold"))
+            canvas.create_text(x, y, text=header, font=("Helvetica", 12, "bold"), fill='black')
 
         for i, row in max_min_data.iterrows():
-            canvas.create_text(cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['hotel'], font=("Helvetica", 12, "italic"))
-            canvas.create_text(cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_month'])
-            canvas.create_text(2 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_month'])
-            canvas.create_text(3 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_season'])
-            canvas.create_text(4 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_season'])
-            canvas.create_text(5 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_room_type'])
-            canvas.create_text(6 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_room_type'])
-            canvas.create_text(7 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_client_type'])
-            canvas.create_text(8 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_client_type'])
+            canvas.create_text(cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['hotel'], font=("Helvetica", 12, "italic"), fill='black')
+            canvas.create_text(cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_month'], fill='black')
+            canvas.create_text(2 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_month'], fill='black')
+            canvas.create_text(3 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_season'], fill='black')
+            canvas.create_text(4 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_season'], fill='black')
+            canvas.create_text(5 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_room_type'], fill='black')
+            canvas.create_text(6 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_room_type'], fill='black')
+            canvas.create_text(7 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['max_client_type'], fill='black')
+            canvas.create_text(8 * cell_width + cell_width / 2, (i + 1) * cell_height + cell_height / 2, text=row['min_client_type'], fill='black')
 
     def get_max_min_data(self, df):
         season_map = {
