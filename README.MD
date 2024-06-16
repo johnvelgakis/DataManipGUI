@@ -5,9 +5,8 @@
 
 ## Project Description
 
-This project is a graphical user interface (GUI) for analyzing and presenting hotel booking data. It provides various statistical analyses and visualizations, including basic statistics, booking distributions, trends, and seasonality. The GUI allows users to interact with the data, retrieve information from a MySQL database, and visualize results through various plots. It was part of the coursework for CEID's Module Principles of Programming Languages & Compilers.
-
-
+This project is a graphical user interface (GUI) for analyzing and presenting hotel booking data for two hotels, the City Hotel and the Resort Hotel. It provides various statistical analyses and visualizations, including basic statistics, booking distributions, trends, and seasonality. The GUI allows users to interact with the data, adjust the time intervals for viewing, and store and retrieve data from a MySQL database. It was part of the coursework for CEID's Module Principles of Programming Languages & Compilers.
+ 
 ## Features
 
 - **Basic Statistics**: Display average nights stayed, cancellation rates, and booking periods.
@@ -32,12 +31,10 @@ This project is a graphical user interface (GUI) for analyzing and presenting ho
 
 3. Set up the MySQL database:
     - Ensure MySQL is installed and running.
-    - Create a database named `hotel_booking`.
     - Update the `db_connection.py` file with your MySQL credentials.
-    - Import initial data into the database:
-        ```sh
-        python db_connection.py
-        ```
+    - Create a db running create_db.sql.
+    - Insert the dataset to your db running insert_data_to_DB.py.
+
 
 ## Usage
 
@@ -85,22 +82,6 @@ DataManipGUI/
     │   └── Main_menu.png
     └── graphics/
         └── (All the plots being saved)
-```
-
-## Dependencies
- 
-- Python 3.x
-- Tkinter
-- pandas
-- numpy
-- matplotlib
-- SQLAlchemy
-- MySQL Connector
-- PIL (Pillow)
-
-Install the required dependencies using:
-```sh
-pip install -r requirements.txt
 ```
 
 ## Contributing
